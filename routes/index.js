@@ -20,3 +20,7 @@ exports.getCurrentWeather = function(req, res) {
     }
   });
 }
+
+exports.getPastWeather = function(req, res) {
+  
+}

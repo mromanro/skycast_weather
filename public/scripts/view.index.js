@@ -15,27 +15,12 @@ $(document).ready(function() {
   insertGoogleScript();
 });
 
-function getFutureForecast(latitude, longitude) {
-
-}
 
 function getPastForecast(latitude, longitude, days) {
 
 }
 
 function dailyWeather(forecast) {
-	var dailyWeather = {
-		'Monday': null,
-		'Tuesday': null,
-		'Wednesday': null,
-		'Thursday': null,
-		'Friday': null,
-		'Saturuday': null,
-		'Sunday': null
-	};
-
-	$("#forecast").empty();
-
 	for(var i = 0, j = forecast.daily.data.length; i < j; i++) {
 		var date = new Date(forecast.daily.data[i].time * 1000);
 		var day = days[date.getDay()];
@@ -46,20 +31,24 @@ function dailyWeather(forecast) {
 		var tempMin = Math.round(forecast.daily.data[i].temperatureMin);
 		var tempMax = Math.round(forecast.daily.data[i].temperatureMax);
 
-		$("#forecast").append(
-			'<li class="shade-'+ skicons +'"><div class="card-container"><div><div class="front card"><div>' +
-					"<div class='graphic'><canvas class=" + skicons + "></canvas></div>" +
-					"<div><b>Day</b>: " + date.toLocaleDateString() + "</div>" +
-					"<div><b>Temperature</b>: " + tempMin + "</div>" +
-					"<div><b>Max Temp.</b>: " + tempMax + "</div>" +
-					"<div><b>Humidity</b>: " + humidity + "</div>" +
-					'<p class="summary">' + summary + '</p>' +
-					'</div></div><div class="back card">' +
-					'<div class="hourly' + ' ' + day + '"><b>Forecast</b><ul class="list-reset"></ul></div></div></div></div></li>'
-		);
+		appendForecastHTML(skicons, tempMin, tempMax, humidity, summary, day, date);
 	}
 
 	skycons();
+}
+
+function appendForecastHTML(skicons, tempMin, tempMax, humidity, summary, day, date) {
+	$("#forecast").append(
+		'<li class="shade-'+ skicons +'"><div class="card-container"><div><div class="front card"><div>' +
+				"<div class='graphic'><canvas class=" + skicons + "></canvas></div>" +
+				"<div><b>Day</b>: " + date.toLocaleDateString() + "</div>" +
+				"<div><b>Min Temp</b>: " + tempMin + "</div>" +
+				"<div><b>Max Temp</b>: " + tempMax + "</div>" +
+				"<div><b>Humidity</b>: " + humidity + "</div>" +
+				'<p class="summary">' + summary + '</p>' +
+				'</div></div><div class="back card">' +
+				'<div class="hourly' + ' ' + day + '"><b>Forecast</b><ul class="list-reset"></ul></div></div></div></div></li>'
+	);
 }
 
 
@@ -80,6 +69,8 @@ function getCurrentWeather(lat, lon) {
 			console.log("returned no error");
 		}
 	});
+
+	$("#forecast").empty();
 }
 
 $('#getWeather').on('click', function(event) {

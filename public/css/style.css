@@ -29,6 +29,27 @@ ul {
   list-style: none;
 }
 
+#forecast {
+  white-space: nowrap;
+  overflow-x: auto;
+  width: 350px;
+  margin: 0;
+  display: flex;
+  flex-flow: row;
+}
+
+#forecast li {
+  display: inline-block;
+  white-space: normal;
+  vertical-align: top;
+}
+
+.container {
+  position: relative;
+  padding-top: 20px;
+  margin-left: 75px;
+}
+
 p,
 a {
   color: #000;
